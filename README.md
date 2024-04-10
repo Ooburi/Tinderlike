@@ -15,8 +15,11 @@
 
 
 ### Before launch add secrets:
-cd API
-dotnet user-secrets init
-dotnet user-secrets set apikey {some api key}
-dotnet user-secrets set connectionstring {connection string}
-cd ..
+* cd API
+* dotnet user-secrets init
+* dotnet user-secrets set apikey '{some api key}'
+* dotnet user-secrets set connectionstring "Host=localhost;Port=5432;Database=tLike;Username=postgres;Password={PASSWORD}"
+* cd ..
+* cd BOT
+* dotnet user-secrets init
+* dotnet user-secrets set Key '{Bot KEY}'
