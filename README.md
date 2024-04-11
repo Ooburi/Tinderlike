@@ -13,6 +13,14 @@
 * EntityFrameworkCore
 * PostgreSQL
 
+//CURREnt state
+1) docker-compose up --build
+
+//current tasks
+1) remove appKey from API
+# PORTS
+
+* SPA - 8000
 
 ### Before local launch add secrets:
 * cd API

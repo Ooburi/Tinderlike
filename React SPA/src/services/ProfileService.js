@@ -12,30 +12,29 @@ const useProfileService = () => {
     }
 
     const {loading, getrequest, postrequest, error, clearError} = useHttp();
-    //const _apiBase = 'https://api.profilematchagency.site/forms/';
-	const _apiBase = 'http://192.168.0.1/forms/';
+	const _apiBase = 'http://127.0.0.1/forms/';
 
 	const postFormData = async (body) => {
 		
-		const url = `${_apiBase}form?userId=${userId}&${_apiKey}`;
+		const url = `${_apiBase}form?userId=${userId}`;
 		const bodyjson = JSON.stringify(body);
 
 		const res = await postrequest(url, bodyjson);
 		return res;
 	}
 	const getForms = async () =>{
-		const res = await getrequest(`${_apiBase}forms?userId=${userId}&${_apiKey}`)
+		const res = await getrequest(`${_apiBase}forms?userId=${userId}`)
 		return res;
 	}
 
 	const postDeleteForm = async (formId) => {
-		const url = `${_apiBase}delete?userId=${userId}&formId=${formId}&${_apiKey}`;
+		const url = `${_apiBase}delete?userId=${userId}&formId=${formId}`;
 		const res = await postrequest(url);
 		return res;
 	}
 
 	const getForm = async (id) => {
-		const res = await getrequest(`${_apiBase}form?userId=${userId}&formId=${id}&${_apiKey}`)
+		const res = await getrequest(`${_apiBase}form?userId=${userId}&formId=${id}`)
 		
 		let newRes = {
 			name: res.name,

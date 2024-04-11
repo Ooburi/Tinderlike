@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  react-spa:
+    build:
+      context: ./React SPA 
+      dockerfile: ./Dockerfile  
+    ports:
+      - "3000:80"
+    environment:
+      - NODE_ENV=production
+
+  nginx:
+    image: nginx:stable-perl
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - react-spa
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certs:/etc/letsencrypt
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot certonly --webroot --webroot-path=/var/www/html --agree-tos -m your_email@example.com -d your_domain.com; sleep 24h & wait $${!}; done;'"
+    depends_on:
+      - nginx
