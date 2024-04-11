@@ -14,7 +14,7 @@
 * PostgreSQL
 
 
-### Before launch add secrets:
+### Before local launch add secrets:
 * cd API
 * dotnet user-secrets init
 * dotnet user-secrets set apikey '{some api key}'
