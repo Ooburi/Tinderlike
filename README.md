@@ -18,6 +18,12 @@
 
 //current tasks
 1) remove appKey from API
+
+
+// INSTRUCTIONS -----------------------------------------
+0)Привязать домен к серверу
+1)apt install snapd
+2)sudo snap install --classic certbot
 # PORTS
 
 * SPA - 8000
