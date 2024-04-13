@@ -21,7 +21,10 @@
 
 
 // INSTRUCTIONS -----------------------------------------
+
+1) Купить или любым другим способом получить домен. У меня уже был куплен домен rinerte.ru.
 0)Привязать домен к серверу
+3) Инструкция : https://help.reg.ru/support/dns-servery-i-nastroyka-zony/nastroyka-resursnykh-zapisey-dns/nastroyka-resursnykh-zapisey-v-lichnom-kabinete#0
 1)apt install snapd
 2)sudo snap install --classic certbot
 # PORTS
