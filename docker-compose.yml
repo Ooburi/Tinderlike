@@ -5,13 +5,13 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_USER: ${rdr2}
-      POSTGRES_PASSWORD: ${8a7cgwh4ausd_#EGsa}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
   api:
     build:
-      context: ./API
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.api
     ports:
       - "8080:8080"
       - "8081:8081"
@@ -21,6 +21,6 @@ services:
   bot:
     build:
       context: ./Bot
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.bot
     depends_on:
       - postgres
