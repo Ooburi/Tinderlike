@@ -17,10 +17,15 @@ services:
       - "8081:8081"
     depends_on:
       - postgres
+    environment:
+      - CONNECTION_STRING=${CONNECTION_STRING}
 
   bot:
     build:
-      context: ./Bot
+      context: .
       dockerfile: Dockerfile.bot
     depends_on:
       - postgres
+    environment:
+      - CONNECTION_STRING=${CONNECTION_STRING}
+      - BOT_TOKEN=${BOT_TOKEN}
