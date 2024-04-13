@@ -18,7 +18,7 @@ try
 }
 finally
 {
-    Console.WriteLine("123  CONNECTION IS::::AAAA:::::"+connection);
+    throw new Exception("123  CONNECTION IS::::AAAA:::::"+connection);
 }
 
 builder.Services.AddDbContext<ProfileContext>(options => options.UseNpgsql(connection));
