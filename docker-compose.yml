@@ -2,12 +2,15 @@ version: '3.4'
 
 services:
   postgres:
-    image: postgres:latest
-    restart: always
+    image: postgres
+    volumes:
+     - ./docker/bd/:/var/lib/postgresql/data/
     environment:
       POSTGRES_DB: ${POSTGRES_USER}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+     - "5432:5432"
 
   api:
     build:

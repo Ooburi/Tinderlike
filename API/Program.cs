@@ -16,6 +16,10 @@ try
 {
     connection = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 }
+finally
+{
+    Console.WriteLine("123  CONNECTION IS::::AAAA:::::"+connection);
+}
 
 builder.Services.AddDbContext<ProfileContext>(options => options.UseNpgsql(connection));
 builder.Services.AddScoped<IProfileService, ProfileService>();
