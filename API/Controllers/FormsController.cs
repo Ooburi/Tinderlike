@@ -12,17 +12,10 @@ namespace ProfileAPI.Controllers
     {
         private ILogger _logger;
         private readonly IProfileService _db;
-        private readonly string _apikey;
         public FormsController(IProfileService db, ILogger<UpdateController> logger)
         {
             _db = db;
             _logger = logger;
-
-            var config = new ConfigurationBuilder()
-                .AddUserSecrets<Program>()
-                .Build();
-
-            _apikey = config["apikey"];
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -42,10 +35,9 @@ namespace ProfileAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Forms(long userId, string apikey) // site/forms/forms?userId=10&apikey=
+        public async Task<IActionResult> Forms(long userId) // site/forms/forms?userId=10
         {
-            if (apikey != _apikey) return NotFound();
-
+            
             _logger.LogInformation($"GetForms accessed by: {userId} : {DateTime.Now.ToLongTimeString()}");
 
             var _user = await _db.GetUser(userId);
@@ -71,10 +63,9 @@ namespace ProfileAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Form(long userId, int formId, string apikey) // site/forms/form?userId=10&formId=10
+        public async Task<IActionResult> Form(long userId, int formId) // site/forms/form?userId=10&formId=10
         {
-            if (apikey != _apikey) return NotFound();
-
+           
             _logger.LogInformation($"Form {formId} accessed by: {userId} : {DateTime.Now.ToLongTimeString()}");
 
             var _user = await _db.GetUser(userId);
@@ -179,14 +170,12 @@ namespace ProfileAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Form(long userId, string apikey, [FromBody]FormResults results) //site/forms/results
+        public async Task<IActionResult> Form(long userId,[FromBody]FormResults results) //site/forms/results
         {
             _logger.LogInformation($"User : {userId} POSTED Answers : {DateTime.Now.ToLongTimeString()}");
 
             User user = await _db.GetUser(userId);
             if(user==null) return NotFound();
-
-            if (apikey != _apikey) return NotFound();
 
             for ( int i =0; i < results.Questions.Count(); i++)
             {
@@ -215,14 +204,12 @@ namespace ProfileAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(long userId, int formId, string apikey)
+        public async Task<IActionResult> Delete(long userId, int formId)
         {
             _logger.LogInformation($"User : {userId} Deleted Answers for FORM_ID: {formId} : {DateTime.Now.ToLongTimeString()}");
 
             User user = await _db.GetUser(userId);
             if (user == null) return NotFound();
-
-            if (apikey != _apikey) return NotFound();
 
             await _db.DeleteUserAnswers(user.Id, formId);
             await _db.ChangeUserStatus(user.Id, formId, DataLayer.Enums.UserStatuses.AnswersChanged);

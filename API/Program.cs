@@ -4,11 +4,18 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
-var config = new ConfigurationBuilder()
+string connection = "";
+try
+{
+    var config = new ConfigurationBuilder()
                 .AddUserSecrets<Program>()
                 .Build();
-var connection = config["connectionstring"];
+    connection = config["connectionstring"];
+    if (String.IsNullOrEmpty(connection)) throw new Exception();
+} catch
+{
+    connection = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+}
 
 builder.Services.AddDbContext<ProfileContext>(options => options.UseNpgsql(connection));
 builder.Services.AddScoped<IProfileService, ProfileService>();
