@@ -16,7 +16,7 @@ namespace DataLayer.Services
                 {
                     UserId = userId,
                     Delay = delay,
-                    LastMessageSent = lastMessageSent,
+                    LastMessageSent = lastMessageSent?.ToUniversalTime(),
                     Counter = 0
                 };
                 await _context.UserDelays.AddAsync(_delay);
@@ -27,12 +27,12 @@ namespace DataLayer.Services
                 if (_delay.Counter >= 3)
                 {
                     _delay.Delay = TimeSpan.FromHours(21);
-                    _delay.LastMessageSent = lastMessageSent;
+                    _delay.LastMessageSent = lastMessageSent?.ToUniversalTime();
                     _delay.Counter = 0;
                 } else
                 {
                     _delay.Delay = delay;
-                    _delay.LastMessageSent = lastMessageSent;
+                    _delay.LastMessageSent = lastMessageSent?.ToUniversalTime();
                     _delay.Counter += 1;
                 }
                 

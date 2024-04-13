@@ -19,12 +19,12 @@ namespace DataLayer.Services
                     UserId = userId,
                     FormId = formId,
                     Status = status,
-                    StatusAssignedAt = DateTime.Now
+                    StatusAssignedAt = DateTime.Now.ToUniversalTime(),
             });
             } else
             {
                 exist.Status = status;
-                exist.StatusAssignedAt = DateTime.Now;
+                exist.StatusAssignedAt = DateTime.Now.ToUniversalTime();
             }
 
             await _context.SaveChangesAsync();
