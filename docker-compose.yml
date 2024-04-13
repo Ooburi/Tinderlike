@@ -28,4 +28,4 @@ services:
       - postgres
     environment:
       - BOT_TOKEN=your_bot_token
-      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=my_database;Username=rdr2;Password=8a7cgwh4ausd_#EGsa"
+      - CONNECTION_STRING: "Host=postgres;Port=5432;Database=my_database;Username=rdr2;Password=8a7cgwh4ausd_#EGsa"
