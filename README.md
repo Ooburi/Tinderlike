@@ -3,7 +3,7 @@
 
   ## About The Project
 
-  Bot, Web app, API
+  Dating app: Bot, Web app, API. 
 
   ### Built With
 
@@ -12,31 +12,52 @@
 * C#
 * EntityFrameworkCore
 * PostgreSQL
+    ### Run With
+* Docker
+* Nginx
+* Let`sEncrypt
 
-//CURREnt state
-1) docker-compose up --build
+### INSTRUCTIONS for 'clear' Ubuntu
 
-//current tasks
-1) remove appKey from API
+```apt-get update
+apt-get install nginx 
+apt-get install snapd
+snap install –classic certbot
+ls -s /snap/bin/certbot /usr/bin/certbot
+certbot –nginx
+apt-get install nodejs
+apt-get install npm
+npm cache clean -f
+npm install -g n
+n stable
+apt-get install –reinstall nodejs-legacy```
 
+#### Relogin
 
-// INSTRUCTIONS -----------------------------------------
+```git clone https://github.com/Ooburi/Tinderlike.git
+cd Tinderlike/React\ SPA/src/services/
+nano ProfileServices.js```
 
-1) Купить или любым другим способом получить домен. У меня уже был куплен домен rinerte.ru.
-0)Привязать домен к серверу
-3) Инструкция : https://help.reg.ru/support/dns-servery-i-nastroyka-zony/nastroyka-resursnykh-zapisey-dns/nastroyka-resursnykh-zapisey-v-lichnom-kabinete#0
-1)apt install snapd
-2)sudo snap install --classic certbot
-# PORTS
+#### Change {DOMAIN} with your actual domain
 
-* SPA - 8000
+```cd ..
+cd ..
+npm run build
+cd
+mv Tinderlike/React\ SPA/dist/* /usr/share/nginx/html/
+cd Tinderlike/
+nano .env```
 
-### Before local launch add secrets:
-* cd API
-* dotnet user-secrets init
-* dotnet user-secrets set apikey '{some api key}'
-* dotnet user-secrets set connectionstring "Host=localhost;Port=5432;Database=tLike;Username=postgres;Password={PASSWORD}"
-* cd ..
-* cd BOT
-* dotnet user-secrets init
-* dotnet user-secrets set Key '{Bot KEY}'
+#### Set {BOT_TOKEN} with your bot_token
+
+```nano nginx.conf```
+
+#### Change {DOMAIN} with your actual domain
+
+```cd
+mv Tinderlike/nginx.conf /etc/nginx/sites-enabled/default
+systemctl restart nginx
+cd Tinderlike
+docker-compose up -d\```
+
+# Then set {DOMAIN} in settings of your bot for menu button and set webhook to https://{DOMAIN}/update
