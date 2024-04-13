@@ -15,10 +15,18 @@ namespace Bot
         private static TelegramBotClient client;
         static Bot()
         {
-            var config = new ConfigurationBuilder()
+            try
+            {
+                var config = new ConfigurationBuilder()
                 .AddUserSecrets<Program>()
-                .Build();
-            Key = config["Key"];
+                            .Build();
+                if (String.IsNullOrEmpty(config["Key"])) throw new Exception();
+                Key = config["Key"];
+            }
+            catch
+            {
+                Key = Environment.GetEnvironmentVariable("BOT_TOKEN");
+            }
         }
 
         public static async Task<TelegramBotClient> Get()
