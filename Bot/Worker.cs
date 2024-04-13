@@ -7,6 +7,7 @@ using Telegram.Bot;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Bot
 {
@@ -36,7 +37,19 @@ namespace Bot
         public Worker(ILogger<Worker> logger, IConfiguration configuration)
         {
             _logger = logger;
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                var config = new ConfigurationBuilder()
+                .AddUserSecrets<Program>()
+                            .Build();
+                if (String.IsNullOrEmpty(config["connectionstring"])) throw new Exception();
+                _connectionString = config["connectionstring"];
+            }
+            catch
+            {
+                _connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+            }
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
