@@ -16,10 +16,6 @@ try
 {
     connection = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 }
-finally
-{
-    throw new Exception("123  CONNECTION IS::::AAAA:::::"+connection);
-}
 
 builder.Services.AddDbContext<ProfileContext>(options => options.UseNpgsql(connection));
 builder.Services.AddScoped<IProfileService, ProfileService>();
